@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu điểm môn Tư tưởng Hồ Chí Minh - ĐH Sư Phạm Kỹ Thuật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .school-logo {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        .result-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .result-table th, .result-table td {
+            border-left: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .result-table th:first-child, .result-table td:first-child {
+            border-left: none;
+        }
+        .result-table tr:last-child td {
+            border-bottom: none;
+        }
+        .print-button:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center mb-4">
+                <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_S%C6%B0_ph%E1%BA%A1m_K%E1%BB%B9_thu%E1%BA%ADt_TPHCM.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_S%C6%B0_ph%E1%BA%A1m_K%E1%BB%B9_thu%E1%BA%ADt_TPHCM.svg.png" 
+                     alt="Logo ĐH Sư Phạm Kỹ Thuật" 
+                     class="school-logo h-16 mr-4">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">ĐẠI HỌC SƯ PHẠM KỸ THUẬT TP.HCM</h1>
+                    <h2 class="text-xl sm:text-2xl font-semibold text-red-600 mt-2">HỆ THỐNG TRA CỨU ĐIỂM HỌC PHẦN</h2>
+                </div>
+            </div>
+            <div class="mt-6 bg-white rounded-lg shadow-md p-4 inline-block">
+                <h3 class="text-lg font-medium text-gray-800">Môn học: <span class="text-blue-600">Tư tưởng Hồ Chí Minh</span></h3>
+                <p class="text-sm text-gray-600 mt-1">Mã học phần: TTHCM2023</p>
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="bg-white rounded-xl card-shadow p-6 mb-10">
+            <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-search mr-2 text-blue-500"></i> Nhập thông tin tra cứu
+            </h3>
+            
+            <form id="gradeForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="classSelect" class="block text-sm font-medium text-gray-700 mb-1">
+                            <i class="fas fa-users mr-1 text-blue-500"></i> Lớp học
+                        </label>
+                        <select id="classSelect" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            <option value="">-- Chọn lớp --</option>
+                            <option value="DH01">DH01 - Điện tử viễn thông</option>
+                            <option value="DH02">DH02 - Cơ khí chế tạo</option>
+                            <option value="DH03">DH03 - Công nghệ thông tin</option>
+                            <option value="DH04">DH04 - Xây dựng dân dụng</option>
+                            <option value="DH05">DH05 - Cơ điện tử</option>
+                            <option value="DH06">DH06 - Kỹ thuật ô tô</option>
+                            <option value="DH07">DH07 - Kế toán</option>
+                            <option value="DH08">DH08 - Quản trị kinh doanh</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="studentId" class="block text-sm font-medium text-gray-700 mb-1">
+                            <i class="fas fa-id-card mr-1 text-blue-500"></i> Mã số sinh viên
+                        </label>
+                        <input type="text" id="studentId" placeholder="Nhập mã số sinh viên" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-search mr-2"></i> Tra cứu điểm
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Section (Initially Hidden) -->
+        <div id="resultsSection" class="hidden bg-white rounded-xl card-shadow p-6 mb-10">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fas fa-file-alt mr-2 text-green-500"></i> Kết quả tra cứu
+                </h3>
+                <button id="printButton" class="print-button bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium py-2 px-4 rounded-lg flex items-center transition">
+                    <i class="fas fa-print mr-2"></i> In kết quả
+                </button>
+            </div>
+            
+            <!-- Student Info -->
+            <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-600">Mã số sinh viên:</p>
+                        <p id="resultStudentId" class="font-medium">--</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Họ và tên:</p>
+                        <p id="resultStudentName" class="font-medium">--</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Lớp:</p>
+                        <p id="resultClassName" class="font-medium">--</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grades Table -->
+            <div class="overflow-x-auto">
+                <table class="result-table w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-sm font-medium text-gray-700">Thành phần</th>
+                            <th class="py-3 px-4 text-center text-sm font-medium text-gray-700">Điểm số</th>
+                            <th class="py-3 px-4 text-center text-sm font-medium text-gray-700">Trọng số</th>
+                            <th class="py-3 px-4 text-center text-sm font-medium text-gray-700">Điểm đạt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-700">Chuyên cần</td>
+                            <td id="attendanceScore" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                            <td class="py-3 px-4 text-center text-sm text-gray-600">20%</td>
+                            <td id="attendanceFinal" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-700">Bài tập nhóm</td>
+                            <td id="groupWorkScore" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                            <td class="py-3 px-4 text-center text-sm text-gray-600">20%</td>
+                            <td id="groupWorkFinal" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-700">Kiểm tra giữa kỳ</td>
+                            <td id="midtermScore" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                            <td class="py-3 px-4 text-center text-sm text-gray-600">20%</td>
+                            <td id="midtermFinal" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-700">Thi cuối kỳ</td>
+                            <td id="finalExamScore" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                            <td class="py-3 px-4 text-center text-sm text-gray-600">40%</td>
+                            <td id="finalExamFinal" class="py-3 px-4 text-center text-sm font-medium">--</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-3 px-4 text-sm font-medium text-gray-800">Tổng kết</td>
+                            <td colspan="2" class="py-3 px-4 text-center text-sm font-medium text-gray-800">Điểm học phần</td>
+                            <td id="totalScore" class="py-3 px-4 text-center text-lg font-bold text-blue-600">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Additional Info -->
+            <div class="mt-6 bg-yellow-50 rounded-lg p-4 border border-yellow-200">
+                <h4 class="text-sm font-medium text-yellow-800 mb-2 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Thông tin bổ sung
+                </h4>
+                <p id="additionalInfo" class="text-sm text-gray-700">
+                    Vui lòng chọn lớp và nhập mã số sinh viên để xem kết quả.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-sm text-gray-500 mt-10">
+            <p>© 2023 Đại học Sư Phạm Kỹ Thuật TP.HCM - Phòng Đào tạo</p>
+            <p class="mt-1">Liên hệ: daotao@hcmute.edu.vn - ĐT: (028) 3896 1234</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('gradeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const classSelect = document.getElementById('classSelect');
+            const studentId = document.getElementById('studentId').value.trim();
+            
+            // Validate inputs
+            if (!classSelect.value) {
+                alert('Vui lòng chọn lớp học!');
+                return;
+            }
+            
+            if (!studentId) {
+                alert('Vui lòng nhập mã số sinh viên!');
+                return;
+            }
+            
+            // Mock data for demonstration
+            const mockData = {
+                studentId: studentId,
+                studentName: getRandomName(),
+                className: classSelect.options[classSelect.selectedIndex].text,
+                attendanceScore: (Math.random() * 10).toFixed(1),
+                groupWorkScore: (Math.random() * 10).toFixed(1),
+                midtermScore: (Math.random() * 10).toFixed(1),
+                finalExamScore: (Math.random() * 10).toFixed(1)
+            };
+            
+            // Calculate final scores
+            const attendanceFinal = (mockData.attendanceScore * 0.2).toFixed(1);
+            const groupWorkFinal = (mockData.groupWorkScore * 0.2).toFixed(1);
+            const midtermFinal = (mockData.midtermScore * 0.2).toFixed(1);
+            const finalExamFinal = (mockData.finalExamScore * 0.4).toFixed(1);
+            const totalScore = (parseFloat(attendanceFinal) + parseFloat(groupWorkFinal) + 
+                               parseFloat(midtermFinal) + parseFloat(finalExamFinal)).toFixed(1);
+            
+            // Display results
+            document.getElementById('resultStudentId').textContent = mockData.studentId;
+            document.getElementById('resultStudentName').textContent = mockData.studentName;
+            document.getElementById('resultClassName').textContent = mockData.className;
+            
+            document.getElementById('attendanceScore').textContent = mockData.attendanceScore;
+            document.getElementById('groupWorkScore').textContent = mockData.groupWorkScore;
+            document.getElementById('midtermScore').textContent = mockData.midtermScore;
+            document.getElementById('finalExamScore').textContent = mockData.finalExamScore;
+            
+            document.getElementById('attendanceFinal').textContent = attendanceFinal;
+            document.getElementById('groupWorkFinal').textContent = groupWorkFinal;
+            document.getElementById('midtermFinal').textContent = midtermFinal;
+            document.getElementById('finalExamFinal').textContent = finalExamFinal;
+            
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            // Set additional info based on score
+            let additionalInfo = "";
+            if (parseFloat(totalScore) >= 8.5) {
+                additionalInfo = "Xếp loại: Giỏi - Chúc mừng bạn đã hoàn thành xuất sắc học phần này!";
+            } else if (parseFloat(totalScore) >= 7.0) {
+                additionalInfo = "Xếp loại: Khá - Bạn đã hoàn thành tốt học phần này.";
+            } else if (parseFloat(totalScore) >= 5.5) {
+                additionalInfo = "Xếp loại: Trung bình - Bạn đã hoàn thành học phần này.";
+            } else if (parseFloat(totalScore) >= 4.0) {
+                additionalInfo = "Xếp loại: Yếu - Bạn cần cố gắng hơn ở các học phần sau.";
+            } else {
+                additionalInfo = "Xếp loại: Kém - Bạn cần đăng ký học lại học phần này.";
+            }
+            
+            document.getElementById('additionalInfo').textContent = additionalInfo;
+            
+            // Show results section
+            document.getElementById('resultsSection').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Print functionality
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // Helper function to generate random Vietnamese names
+        function getRandomName() {
+            const firstNames = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Huỳnh', 'Hoàng', 'Phan', 'Vũ', 'Võ', 'Đặng'];
+            const middleNames = ['Văn', 'Thị', 'Hữu', 'Đức', 'Minh', 'Ngọc', 'Kim', 'Thanh'];
+            const lastNames = ['Anh', 'Bình', 'Cường', 'Dũng', 'Giang', 'Hải', 'Khoa', 'Long', 'Mạnh', 'Nam', 'Phong', 'Quân', 'Sơn', 'Thắng', 'Tuấn'];
+            
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const middleName = middleNames[Math.floor(Math.random() * middleNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            
+            return `${firstName} ${middleName} ${lastName}`;
+        }
+    </script>
+</body>
+</html>
